@@ -1,6 +1,5 @@
 
 # Plagiarism Detector
-> Additional information or tagline
 
 A Plagiarism detector tool front end portion.
 Allows upload of two zip folder of js projects/files for plagiarism comparison.
