@@ -1,0 +1,33 @@
+{
+  "name": "cs4530-5500-fall-2020-final",
+  "version": "3.0.0",
+  "description": "Final project",
+  "main": "index.ts",
+  "scripts": {
+    "test": "ts-mocha --reporter ./reporters/mocha-json-reporter.js tests/*.spec.ts",
+    "run": "tsc && node dist/index.js",
+    "pack": "npm-pack-zip"
+  },
+  "author": "Jonathan Bell",
+  "license": "ISC",
+  "dependencies": {
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^14.14.10",
+    "acorn": "^8.0.4",
+    "acorn-walk": "^8.0.0",
+    "adm-zip": "^0.5.1",
+    "chai": "^4.2.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mocha": "^8.0.1",
+    "multer": "^1.4.2",
+    "stable": "^0.1.8",
+    "ts-mocha": "^7.0.0",
+    "typescript": "^3.9.6"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "npm-pack-zip": "^1.2.7"
+  }
+}

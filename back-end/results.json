@@ -1,0 +1,36 @@
+{
+  "suites": {
+    "title": "root",
+    "fullTitle": "root",
+    "suites": [
+      {
+        "title": "test parse class",
+        "fullTitle": "test parse class",
+        "suites": [],
+        "tests": [
+          {
+            "title": "test compareCodes method",
+            "fullTitle": "test parse class test compareCodes method",
+            "status": "PASS",
+            "error": null
+          }
+        ],
+        "pass": 1,
+        "fail": 0
+      }
+    ],
+    "tests": [],
+    "pass": 0,
+    "fail": 0
+  },
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2020-11-29T03:02:34.269Z",
+    "end": "2020-11-29T03:02:34.290Z",
+    "duration": 21
+  }
+}
