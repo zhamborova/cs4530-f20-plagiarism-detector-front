@@ -27,11 +27,11 @@ class Directory extends React.Component<DirectoryProps>{
             if (instanceOfFileItem(item)) {
                 return <File key={item.name} item={item}
                              setFile={this.props.setFile}
-                             current={this.props.curSimilarityId}/>
+                             curSimilarityId={this.props.curSimilarityId}/>
             }
             else {
                 return (
-                    <Folder name={item.name} key={item.name} current={this.props.curSimilarityId} >
+                    <Folder name={item.name} key={item.name} curSimilarityId={this.props.curSimilarityId} >
                         <Directory data={item.children}
                                    setFile={this.props.setFile}
                                    curSimilarityId={this.props.curSimilarityId}/>

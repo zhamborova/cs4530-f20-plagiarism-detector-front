@@ -12,10 +12,17 @@ class Folder  extends React.Component<FolderProps,FolderState>{
         isOpen: false
     }
 
+    componentDidMount(): void {
+        const {children,curSimilarityId} = this.props;
+            if(this.shouldOpen(children.props.data, curSimilarityId)){
+                this.setState({isOpen: true})
+        }
+    }
+
     componentDidUpdate(prevProps:FolderProps, prevState:FolderState, snapshot:any) {
-        const {children,current} = this.props;
-        if(current !== prevProps.current){
-            if(this.shouldOpen(children.props.data, current)){
+        const {children,curSimilarityId} = this.props;
+        if(curSimilarityId !== prevProps.curSimilarityId){
+            if(this.shouldOpen(children.props.data, curSimilarityId)){
                 this.setState({isOpen: true})
             }
         }

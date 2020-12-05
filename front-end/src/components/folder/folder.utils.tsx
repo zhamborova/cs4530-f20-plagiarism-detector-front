@@ -4,7 +4,7 @@ import Directory from "../directory/directory";
 
 export interface FolderProps {
     name:string,
-    current:string,
+    curSimilarityId:string,
     children: React.ReactElement<Directory>
 }
 

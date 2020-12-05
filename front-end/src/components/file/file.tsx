@@ -1,5 +1,6 @@
 import React from "react";
 import {FileProps, FileState} from "./file.utils";
+import {type} from "os";
 const color = "rgb(235, 233, 233)";
 
 
@@ -22,19 +23,27 @@ class File extends React.Component<FileProps, FileState>{
     }
     componentDidUpdate(prevProps:FileProps, prevState:FileState,snapshot:any) {
         let { curSimilarityId} = this.props
-        prevProps.curSimilarityId !== curSimilarityId ?  this.highlightFile() :
-                                         this.setState({highlight:"transparent"})
+         if(curSimilarityId !== prevProps.curSimilarityId){
+             this.highlightFile()
+          }
         }
 
     /**
-     * set color of the file in dir if it contains the current similarity
+     * highlight file in dir if it contains the current similarity
      */
        highlightFile(this: File) {
-         let {item, setFile, curSimilarityId} = this.props
-         if(item.similarities.some(s => s.id === curSimilarityId)){
-             setFile(item)
-             this.setState({highlight:color})
-         }
+         let {item, setFile, curSimilarityId} = this.props;
+        for(let i = 0; i < item.similarities.length; i++){
+            let s = item.similarities[i];
+            if(s.id === curSimilarityId){
+                setFile(item)
+                this.setState({highlight:color})
+                break;
+            }
+        }
+        if(item.similarities.every(s => s.id !== curSimilarityId)){
+            this.setState({highlight:"transparent"})
+        }
      }
 
     render(){

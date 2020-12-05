@@ -26,24 +26,21 @@ class Code extends React.Component<CodeProps,CodeState>{
 
     componentDidMount() {
         let {curSimilarityId} = this.props
-        if(curSimilarityId){
-                if(this.domRefs[curSimilarityId]) {
-
-                    this.domRefs[curSimilarityId].scrollIntoView({behavior:"smooth"})
-                }
+        if(curSimilarityId && this.domRefs[curSimilarityId]){
+           this.domRefs[curSimilarityId].scrollIntoView({behavior:"smooth"})
         }
     }
 
 
     componentDidUpdate(prevProps:CodeProps, prevState:CodeState, snapshot:any) {
-        let {curSimilarityId, contents} = this.props
-
-        if(prevProps.curSimilarityId !== curSimilarityId){
+        let {curSimilarityId} = this.props
 
 
-                if(this.domRefs[curSimilarityId]) {
+        if(prevProps.curSimilarityId !== curSimilarityId && this.domRefs[curSimilarityId]
+            ||
+            prevProps.curSimilarityId == curSimilarityId && this.domRefs[curSimilarityId]){
                     this.domRefs[curSimilarityId].scrollIntoView({behavior:"smooth"})
-                }
+
 
         }
 
