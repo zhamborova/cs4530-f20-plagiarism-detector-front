@@ -1,4 +1,3 @@
-![Logo of the project](https://raw.githubusercontent.com/jehna/readme-best-practices/master/sample-logo.png)
 
 # Plagiarism Detector
 > Additional information or tagline
