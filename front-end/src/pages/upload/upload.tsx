@@ -5,9 +5,10 @@ import { History } from 'history';
 import FileUpload from "../../components/file-upload/file-upload";
 
 interface CodeState {
-    file1: Blob | string
-    file2: Blob | string
-    loading: boolean
+    loading: boolean,
+    file1: string| Blob,
+    file2: string| Blob,
+    [key: string]: any
 }
 interface CodeProps {
     setUpload: ()=>void,
@@ -40,10 +41,11 @@ class Upload extends React.Component<CodeProps,CodeState>{
 
             Axios.post("http://localhost:8080/upload/project1", data)
                 .then(res => {
+                    console.log(res)
                     upload1=true})
                 .catch(err => console.log(err));
-            Axios.post("http://localhost:8080/upload/project2", data)
-                .then(res => upload2= true)
+            Axios.post("http://localhost:8080/upload/project2", data2)
+                .then(res => {   console.log(res); upload2= true})
                 .then(status =>{
                 if(upload1 && upload2){
                 this.props.setUpload();
@@ -63,8 +65,9 @@ class Upload extends React.Component<CodeProps,CodeState>{
      */
     setFile = (fileNum:string, file:Blob|string) => {
         let name = "file"+fileNum;
-        ///whyyyyyyy FIIXXX
-        this.setState({...this.state, [name]: file})
+
+        this.setState({[name]: file},  ()=>
+            console.log(name, this.state))
     }
 
     render() {
