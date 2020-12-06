@@ -19,8 +19,11 @@ class Directory extends React.Component<DirectoryProps>{
 
     shouldComponentUpdate(nextProps: Readonly<DirectoryProps>,
                           nextState: any, nextContext: any): boolean {
-        return nextProps.curSimilarityId !== this.props.curSimilarityId
-    }
+        console.log(this.props)
+        return nextProps.curSimilarityId !== this.props.curSimilarityId ||
+              nextProps.data.length != this.props.data.length}
+
+
 
     render(){
         return this.props.data.map(item => {
