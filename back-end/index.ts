@@ -23,21 +23,17 @@ var storage =  multer.diskStorage({
 //REMOVE ANY TYPE ARGS
 app.use(express.json())
 app.use(cors());
-
+const fsExtra = require('fs-extra')
 var upload = multer({ storage }).single('file')
 
 app.post("/upload/:project", upload, function(req: any, res: any, next: any) {
     const {file} = req;
 
-    fs.rmdir("project1", ()=>{
 
-        fs.rmdir("project2", ()=>{
-
+    fsExtra.emptyDirSync(`${req.params.project}`);
             var zip2 = new admZip(file.path);
             zip2.extractAllTo(`${__dirname}/${req.params.project}`, true);
-
-
-        })})
+    fs.rmdirSync(`${req.params.project}/__MACOSX`, { recursive: true });
 
 
     res.send("success")
@@ -49,7 +45,7 @@ app.get("/plagiarism", function(req:any, res:any, next:any) {
     let result = results()
 
 
-    //  res.send(JSON.stringify(result))
+      res.send(JSON.stringify(result))
 
 
 })

@@ -29,20 +29,22 @@ class Plagiarism extends React.Component<{},PlagiarismState> {
         file1: { type: "file", name: "", contents: {}, similarities: [] },
         file2: { type: "file", name: "", contents: {}, similarities: [] },
         current: 0,
-        idList: ["3329f8043027b56d690b301da16adcbb96eb0d8d",
-            "17672af67552cefc7ed523310456d512c9f56a9f"],
+        idList: [],
         project1:[],
         project2:[],
 
     }
 
+    /**
+     * Will fetch the similarities from server upon mounting
+     */
    componentDidMount(): void {
        fetch("http://localhost:8080/plagiarism")
            .then(res => res.json())
            .then(results => {
                console.log(results)
-               const {files1, files2, } = results
-               this.setState({project1:files1, project2:files2})
+               const {files1, files2,idList } = results
+               this.setState({project1:files1, project2:files2, idList:idList})
            })
    }
 
