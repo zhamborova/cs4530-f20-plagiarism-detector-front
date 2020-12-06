@@ -24,6 +24,10 @@ export default class File {
         return this.contentMap;
     }
 
+    public getSimilarityKeys(): string[] {
+        return Array.from(this.similarityMap.keys());
+    }
+
     public getSimilarity() : {[k: string]: any}[] {
         const similarities = [];
     

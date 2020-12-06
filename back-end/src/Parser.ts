@@ -201,6 +201,7 @@ export default class Parser {
           }
         }
         console.log('match')
+        
         this.prune(groups[i]);
       }
     }
