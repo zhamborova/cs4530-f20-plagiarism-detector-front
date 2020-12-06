@@ -1,18 +1,21 @@
 import * as React from "react"
 import Axios from "axios";
 import "./upload.css"
+import { History } from 'history';
 import FileUpload from "../../components/file-upload/file-upload";
-import {Link} from "react-router-dom";
 
 interface CodeState {
     file1: Blob | string
     file2: Blob | string
     loading: boolean
 }
+interface CodeProps {
+    setUpload: ()=>void,
+    history: History
+}
 
 
-
-class Upload extends React.Component<CodeState>{
+class Upload extends React.Component<CodeProps,CodeState>{
     state={
         file1: "",
         file2: "",
@@ -24,7 +27,8 @@ class Upload extends React.Component<CodeState>{
      * Uploads two files on the server separately
      */
     send = () => {
-
+          let upload1 = false;
+          let upload2 = false;
         if(!this.state.file1 || !this.state.file2){
             alert("Please upload the missing projects!")
         }
@@ -35,19 +39,20 @@ class Upload extends React.Component<CodeState>{
             data2.append("file", this.state.file2);
 
             Axios.post("http://localhost:8080/upload/project1", data)
-                .then(res => console.log(res))
+                .then(res => {
+                    upload1=true})
                 .catch(err => console.log(err));
             Axios.post("http://localhost:8080/upload/project2", data)
-                .then(res => console.log(res))
+                .then(res => upload2= true)
+                .then(status =>{
+                if(upload1 && upload2){
+                this.props.setUpload();
+                this.props.history.push('/plagiarism');
+                }
+            })
                 .catch(err => console.log(err));
 
 
-            //    fetch("http://localhost:8080/upload/project1",
-            //        {
-            //            method: "POST",
-            //            body: JSON.stringify(data)
-            //        }).then(res => console.log(res))
-            //        .catch(err => console.log(err));
         }
     }
 
@@ -57,7 +62,9 @@ class Upload extends React.Component<CodeState>{
      * @param file
      */
     setFile = (fileNum:string, file:Blob|string) => {
-        this.setState({["file"+fileNum]: file})
+        let name = "file"+fileNum;
+        ///whyyyyyyy FIIXXX
+        this.setState({...this.state, [name]: file})
     }
 
     render() {
@@ -70,8 +77,8 @@ class Upload extends React.Component<CodeState>{
                     <FileUpload setFile={this.setFile} uploaded={this.state.file1 !== ""} fileName="1"/>
                     <FileUpload setFile={this.setFile} uploaded={this.state.file2 !== ""} fileName="2" />
                 </form>
-                <Link to={"/plagiarism"} className={`btn btn-dark btn-send ${canSend? `` : 'disabled'}`}
-                        onClick={()=>{this.send();}}>Compare programs</Link>
+                <button className={`btn btn-dark btn-send ${canSend? `` : 'disabled'}`}
+                        onClick={()=>{this.send();}}>Compare programs</button>
             </div>
         );
     }

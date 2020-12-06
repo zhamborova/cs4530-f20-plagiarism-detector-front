@@ -1,17 +1,20 @@
 import React from "react";
 import './plagiarism.css'
-import {files, files1, obj} from "./dummy-data";
 import Directory from "../../components/directory/directory";
 import Code from "../../components/code/code";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowDown, faArrowUp} from "@fortawesome/free-solid-svg-icons";
 import {FileItem} from "../../components/file/file.utils";
 import {FolderItem} from "../../components/folder/folder.utils";
+import {Spinner} from "react-bootstrap";
 
-interface PlagiarismProps {
+interface PlagiarismState {
     project1:(FolderItem|FileItem)[],
     project2:(FolderItem|FileItem)[],
-    idList: string[]
+    idList: string[],
+    file1: FileItem,
+    file2: FileItem,
+    current: number,
 }
 
 
@@ -21,19 +24,29 @@ interface PlagiarismProps {
  * @description Maintains the current similarity the user is looking at
  * and enables inspection of the next/previous similarity with next/prev buttons
  */
-class Plagiarism extends React.Component<PlagiarismProps> {
+class Plagiarism extends React.Component<{},PlagiarismState> {
     state = {
-        file1: {similarities: [], contents: {}},
-        file2: {similarities: [], contents: {}},
+        file1: { type: "file", name: "", contents: {}, similarities: [] },
+        file2: { type: "file", name: "", contents: {}, similarities: [] },
         current: 0,
         idList: ["3329f8043027b56d690b301da16adcbb96eb0d8d",
-            "17672af67552cefc7ed523310456d512c9f56a9f"]
+            "17672af67552cefc7ed523310456d512c9f56a9f"],
+        project1:[],
+        project2:[],
+
     }
 
    componentDidMount(): void {
-        const {idList} = this.props
-        this.setState({idList})
+       fetch("http://localhost:8080/plagiarism")
+           .then(res => res.json())
+           .then(results => {
+               console.log(results)
+               const {files1, files2, } = results
+               this.setState({project1:files1, project2:files2})
+           })
    }
+
+
 
     setFile1 = (file1: FileItem) => {
 
@@ -46,7 +59,7 @@ class Plagiarism extends React.Component<PlagiarismProps> {
 
     /**
      * Goes either to next or previous similarity if there are any left
-     * @param dir
+     * @param dir determines whether go to the next or previous similarity
      */
     nextSimilarity = (dir: number) => {
         if (dir > 0 && this.state.current < this.state.idList.length - 1) {
@@ -73,7 +86,7 @@ class Plagiarism extends React.Component<PlagiarismProps> {
             </div>
             <div className="row code-container d-flex flex-nowrap m-0 mt-3 ">
                 <div className="folder-structure col-2">
-                    <Directory data={this.props.project1}
+                    <Directory data={this.state.project1}
                                setFile={this.setFile1}
                                curSimilarityId={cur}/>
                 </div>
@@ -85,13 +98,20 @@ class Plagiarism extends React.Component<PlagiarismProps> {
                     <Code {...file2} curSimilarityId={cur}/>
                 </div>
                 <div className="folder-structure col-2">
-                    <Directory data={this.props.project2}
+                    <Directory data={this.state.project2}
                                setFile={this.setFile2}
                                curSimilarityId={cur}/>
                 </div>
 
             </div>
         </div>
+
+        // <div className="container-fluid d-flex">
+        //
+        //     <Spinner animation="border"  role="status">
+        //         <span className="sr-only">Loading...</span>
+        //     </Spinner>
+        // </div>
 
     }
 }
