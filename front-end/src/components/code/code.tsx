@@ -34,8 +34,7 @@ class Code extends React.Component<CodeProps,CodeState>{
 
     componentDidUpdate(prevProps:CodeProps, prevState:CodeState, snapshot:any) {
         let {curSimilarityId} = this.props
-
-
+        console.log(this.props.similarities)
         if(prevProps.curSimilarityId !== curSimilarityId && this.domRefs[curSimilarityId]
             ||
             prevProps.curSimilarityId == curSimilarityId && this.domRefs[curSimilarityId]){
@@ -50,18 +49,22 @@ class Code extends React.Component<CodeProps,CodeState>{
 
 
 //highlight plagiarized code
-    highlight = (i:number) =>{
+    highlight = (index:number) =>{
         let col = ""
-        this.props.similarities.forEach(s => {
-            if(s.id === this.props.curSimilarityId && s.startLine <= i && i <= s.endLine){
-                col = "red-current"
+       for(let i = 0 ; i < this.props.similarities.length; i++){
+           let s = this.props.similarities[i]
+          if(s.id === this.props.curSimilarityId && s.startLine <= index && index <= s.endLine){
+                col = "red-current";
+                break;
             }
-            else if(s.startLine <= i && i <= s.endLine) {
+            else if(s.startLine <= index && index <= s.endLine) {
                 col = "red";
+                break;
             }
-            else return ""
-        })
-
+             else {
+                 col= ""
+           }
+        }
         return col;
     }
 

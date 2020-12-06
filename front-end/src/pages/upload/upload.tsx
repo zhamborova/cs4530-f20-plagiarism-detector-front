@@ -2,6 +2,7 @@ import * as React from "react"
 import Axios from "axios";
 import "./upload.css"
 import FileUpload from "../../components/file-upload/file-upload";
+import {Link} from "react-router-dom";
 
 interface CodeState {
     file1: Blob | string
@@ -69,8 +70,8 @@ class Upload extends React.Component<CodeState>{
                     <FileUpload setFile={this.setFile} uploaded={this.state.file1 !== ""} fileName="1"/>
                     <FileUpload setFile={this.setFile} uploaded={this.state.file2 !== ""} fileName="2" />
                 </form>
-                <button className={`btn btn-dark btn-send ${canSend? `` : 'disabled'}`}
-                        onClick={()=>this.send()}>Compare programs</button>
+                <Link to={"/plagiarism"} className={`btn btn-dark btn-send ${canSend? `` : 'disabled'}`}
+                        onClick={()=>{this.send();}}>Compare programs</Link>
             </div>
         );
     }
