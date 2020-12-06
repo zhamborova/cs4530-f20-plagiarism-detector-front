@@ -2,14 +2,16 @@ const port = 8080
 const express = require('express');
 const admZip = require('adm-zip');
 const fs = require("fs")
-
+import {results} from "./src/Main";
 
 
 const cors = require('cors');
 const app = express();
 const multer = require("multer");
 
-const main = require("./src/Main")
+//const {results} = require("./src/Main")
+
+//console.log(results());
 
 var storage = multer.diskStorage({
     destination: function (req: any, file: any, cb: any) {
@@ -30,16 +32,11 @@ app.use(cors());
 
 var upload = multer({ storage: storage }).single('file')
 
-///two files and list
-var results:any = null;
-
 app.post("/upload/:project", upload, function(req: any, res: any, next: any) {
     const {file} = req;
 
     var zip2 = new admZip(file.path);
     zip2.extractAllTo(`${__dirname}/${req.params.project}`, true);
-
-  results =  main.results()
 
 
 });
