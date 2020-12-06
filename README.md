@@ -1,14 +1,16 @@
 
 # Plagiarism Detector
 
-A Plagiarism detector tool front end portion.
+A Plagiarism detector tool for JavaScript projects.
 Allows upload of two zip folder of js projects/files for plagiarism comparison.
 
 ## Mock ups
 Upload Page
-![alt text](https://github.ccs.neu.edu/yasmi/CS-4530-5500-Fall-2020-Term-Project/Team-12//blob/main/image.jpg?raw=true)
-![alt text](https://github.com/[username/[reponame]/blob/[branch]/image.jpg?raw=true)
+![Screenshot](upload.png)
 
+Plagiarism Comparison Page
+
+![Screenshot](plagiarism.png)
 
 ## Installing / Getting started
 
@@ -33,7 +35,7 @@ Npm will install all the required packages and ts-node index will start the serv
 Backend
 
 ## Features
-* Detects Plagirised Code
+* Detects Plagiarised Code
 * Highlights plagiarised code 
 * Allows navigation between similarities across different files with next/prev buttons along with manual inspection
 
