@@ -30,19 +30,20 @@ export default class Parser {
     for(var filePath of filePaths) {
         const trees: any[] = [];
         const ast = fs.readFileSync(filePath).toString();
-        const astRoot = babylon.parse(ast, {
-          allowReturnOutsideFunction: true,
-          allowImportExportEverywhere: true,
-          sourceType: "script",
-          plugins: ['jsx', 'flow', 'doExpressions', 'objectRestSpread', 'decorators',
-          'classProperties', 'exportExtensions', 'asyncGenerators', 'functionBind',
-          'functionSent', 'dynamicImport']
-        }).program;
-
+        var astRoot;
+        try { 
+          astRoot = this.parseFile(ast, "script");
+        } catch (e) {
+          try {
+            astRoot = this.parseFile(ast, "module");
+          } catch (e) {
+            console.log("fail to parse file " + filePath);
+            return;
+          }
+        }
         this.getNodesDFS(astRoot, filePath, false, trees);
         this.walkTree(astRoot, filePath);
         this.fileNodes.set(filePath, trees);
-        //console.log(trees);
     }
     //console.log(this.keyMap.get("2jmj7l5rSw0yVb/vlWAYkK/YBwk=").length);
 
@@ -50,6 +51,17 @@ export default class Parser {
     this.analyze();
     
   }   
+
+  private parseFile(ast: string, sourceType: string): any {
+    return babylon.parse(ast, {
+      allowReturnOutsideFunction: true,
+      allowImportExportEverywhere: true,
+      sourceType: sourceType,
+      plugins: ['jsx', 'flow', 'doExpressions', 'objectRestSpread', 'decorators',
+      'classProperties', 'exportExtensions', 'asyncGenerators', 'functionBind',
+      'functionSent', 'dynamicImport']
+    }).program;
+  }
 
   private walkTree(node: any, filename: string) {
     var visit = (node: any) => {

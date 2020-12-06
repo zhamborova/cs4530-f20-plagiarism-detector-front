@@ -76,5 +76,3 @@ export const results =  () => {
 
     return {files1, files2, idList}
 }
-
-
