@@ -14,7 +14,7 @@ function fun(sa, sb) {
 
         
         let num2 = num + num1;
-        str+= i.toString()
+        str+= i.toString();
     }
 
     return sa - sb;
