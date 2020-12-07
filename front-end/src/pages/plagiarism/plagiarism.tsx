@@ -6,8 +6,19 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowDown, faArrowUp} from "@fortawesome/free-solid-svg-icons";
 import {FileItem} from "../../components/file/file.utils";
 import {FolderItem} from "../../components/folder/folder.utils";
-import {Spinner} from "react-bootstrap";
+import {getResults} from "../../services";
 
+/**
+ * @interface PlagiarismState represents the state of a Plagiarsim class
+ * @property
+ * project1 and project2 are projects containing files/folders with contents and similarities
+ * @property
+ * file1 and file2 represent the file currently displayed in the code box
+ * @property
+ * idList is the list of similarities' ids
+ * @property
+ * current is the index of a current similarity in idList
+ */
 interface PlagiarismState {
     project1:(FolderItem|FileItem)[],
     project2:(FolderItem|FileItem)[],
@@ -39,10 +50,7 @@ class Plagiarism extends React.Component<{},PlagiarismState> {
      * Will fetch the similarities from server upon mounting
      */
    componentDidMount(): void {
-       fetch("http://localhost:8080/plagiarism")
-           .then(res => res.json())
-           .then(results => {
-               console.log(results)
+       getResults().then(results => {
                const {files1, files2,idList } = results
                this.setState({project1:files1, project2:files2, idList:idList})
            })
@@ -52,7 +60,7 @@ class Plagiarism extends React.Component<{},PlagiarismState> {
 
     setFile1 = (file1: FileItem) => {
 
-        this.setState({file1})
+        this.setState({file1: file1})
     }
     setFile2 = (file2: FileItem) => {
         this.setState({file2})
@@ -108,12 +116,6 @@ class Plagiarism extends React.Component<{},PlagiarismState> {
             </div>
         </div>
 
-        // <div className="container-fluid d-flex">
-        //
-        //     <Spinner animation="border"  role="status">
-        //         <span className="sr-only">Loading...</span>
-        //     </Spinner>
-        // </div>
 
     }
 }

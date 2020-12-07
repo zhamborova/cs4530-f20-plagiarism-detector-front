@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/chai": "^4.2.11",
+    "@types/express": "^4.17.9",
     "@types/mocha": "^7.0.2",
     "@types/node": "^14.14.10",
     "acorn": "^8.0.4",

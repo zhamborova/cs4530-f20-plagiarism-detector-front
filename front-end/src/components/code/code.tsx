@@ -2,28 +2,27 @@ import React from "react";
 import './code.css'
 import {Similarity} from "../file/file.utils";
 
+/**
+ * @interface CodeProps represents props passed to Code component
+ * contents represents the code of the file
+ * curSimilarityId is the current similarity the user is looking at
+ * similarities is the list of similarities this file contains
+ */
 interface CodeProps {
     contents: { [key: string]: string},
     curSimilarityId:string,
     similarities: (Similarity)[]
 }
-interface CodeState {
-    contents: { [key: string]: string},
-    map: { [key: string]: HTMLElement},
-
-}
 
 /**
  * @class Code
  * This class is responsible for displaying code on Plagiarism page
- * @description It highlights plagiarized code and keeps track of the current similarity
+ * @description It highlights plagiarized code, srolls to it, and keeps track of the current similarity
  * the user is a looking at
  */
-class Code extends React.Component<CodeProps,CodeState>{
-    private domRefs: any = {}
+class Code extends React.Component<CodeProps>{
 
-
-
+    private domRefs: {[key: string]: HTMLElement} = {}
     componentDidMount() {
         let {curSimilarityId} = this.props
         if(curSimilarityId && this.domRefs[curSimilarityId]){
@@ -32,7 +31,7 @@ class Code extends React.Component<CodeProps,CodeState>{
     }
 
 
-    componentDidUpdate(prevProps:CodeProps, prevState:CodeState, snapshot:any) {
+    componentDidUpdate(prevProps:CodeProps, prevState:any, snapshot:any) {
         let {curSimilarityId} = this.props
         console.log(this.props.similarities)
         if(prevProps.curSimilarityId !== curSimilarityId && this.domRefs[curSimilarityId]

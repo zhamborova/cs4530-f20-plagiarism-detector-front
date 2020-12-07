@@ -4,6 +4,13 @@ import {FileItem, instanceOfFileItem} from "../file/file.utils";
 import File from '../file/file'
 import Folder from "../folder/folder"
 
+
+/**
+ * @interface DirectoryProps represents the props passed to Directory
+ * curSimilarityId is the current similarity the user is looking at
+ * data is the list of folders/files
+ * setFile function enables setting of the current file for Plagiarism component Code boxes for display
+ */
 export interface DirectoryProps{
     curSimilarityId:string,
     data:(FolderItem|FileItem)[]

@@ -1,6 +1,28 @@
 import React from "react";
-import {FolderItem, FolderProps, FolderState} from "./folder.utils";
+import {FolderItem} from "./folder.utils";
 import {FileItem, instanceOfFileItem} from "../file/file.utils";
+import Directory from "../directory/directory";
+
+/**
+ * @interface FolderProps represents props passed to Folder component
+ * name is the name of the folder
+ * curSimilarityId is the current similarity the user is looking at
+ * children is a directory contained withing the folder, which is a list of files and folders
+ */
+export interface FolderProps {
+    name:string,
+    curSimilarityId:string,
+    children: React.ReactElement<Directory>
+}
+
+/**
+ * @interface FolderState represents the state of a Folder
+ * folder can either be closed or opened
+ */
+export interface FolderState {
+    isOpen:boolean
+}
+
 
 /**
  * @class Folder

@@ -1,9 +1,28 @@
 import React from "react";
-import {FileProps, FileState} from "./file.utils";
-import {type} from "os";
+import {FileItem} from "./file.utils";
 const color = "rgb(235, 233, 233)";
 
 
+/**
+ * @interface FileProps represents props passed down to File component
+ * item is a FileItem containing all the info about the file
+ * setFile function enables setting of the current file for Plagiarism component Code boxes for display
+ * curSimilarityId is the current similarity the user is looking at
+ */
+export interface FileProps {
+    item: FileItem,
+    setFile: (file:FileItem)=>void,
+    curSimilarityId: string
+}
+
+/**
+ * @interface FileState represents the state of File component
+ * highlight property highlight the file name in directory if the file contains the current similarity
+ */
+export interface FileState {
+    highlight:string
+
+}
 /**
  * @class File
  * Represents a file in a directory
